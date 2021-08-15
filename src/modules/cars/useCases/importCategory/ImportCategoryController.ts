@@ -11,7 +11,7 @@ class ImportCategoryController {
 
         await service.execute(file);
 
-        return res.send();
+        return res.status(201).send();
     }
 }
 

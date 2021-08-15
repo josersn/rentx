@@ -37,7 +37,7 @@
                         }
                     }
                 },
-                "response": {
+                "responses": {
                     "201": {
                         "description": "Created"
                     },
@@ -74,6 +74,74 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "/categories/import": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Import Categories",
+                "description": "Upload a new categories",
+                "requestBody": {
+                    "content": {
+                        "mulitpart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/specifications": {
+            "post": {
+                "tags": [
+                    "Specifications"
+                ],
+                "summary": "Create a Specification",
+                "description": "Create a new Specification",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Speficications"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Speficication already exists"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Speficications": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
                 }
             }
         }
