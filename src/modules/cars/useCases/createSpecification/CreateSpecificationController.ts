@@ -1,12 +1,17 @@
 import { Request, Response } from "express";
 import { CreateSpecificationService } from "./CreateSpecificationService";
+import { container} from "tsyringe";
 
 class CreateSpecificationController {
-    constructor(private createSpecificationService: CreateSpecificationService) { }
 
-    handler(req: Request, res: Response): Response {
+
+
+    handle(req: Request, res: Response): Response {
         const { name, description } = req.body;
-        this.createSpecificationService.execute({ name, description });
+
+        const createSpecificationService = container.resolve(CreateSpecificationService);
+
+        createSpecificationService.execute({ name, description });
 
         return res.status(201).send();
     }
