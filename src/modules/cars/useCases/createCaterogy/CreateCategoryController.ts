@@ -7,12 +7,12 @@ class CreateCategoryController {
 
     constructor(private createCategoryService: CreateCategoryService) { }
 
-    handle(req: Request, res: Response): Response {
+    async handle(req: Request, res: Response): Promise<Response> {
         try {
             const { name, description } = req.body;
 
 
-            this.createCategoryService.execute({ name, description });
+            await this.createCategoryService.execute({ name, description });
 
             return res.status(201).send();
         } catch (error) {
