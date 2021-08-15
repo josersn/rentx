@@ -6,10 +6,10 @@ class CreateSpecificationController {
 
 
 
-    handle(req: Request, res: Response): Response {
+    async handle(req: Request, res: Response): Promise<Response> {
         const { name, description } = req.body;
 
-        const createSpecificationService = container.resolve(CreateSpecificationService);
+        const createSpecificationService = await container.resolve(CreateSpecificationService);
 
         createSpecificationService.execute({ name, description });
 
