@@ -13,6 +13,12 @@ class CreateUserService {
 
     async execute({ name, username, password, email, driver_license }: ICreateUserDTO): Promise<void> {
 
+        const userAlreadyExists = this.repository.findByEmail(email);
+
+        if (userAlreadyExists) {
+            throw new Error("User Already Exists");
+        }
+
         const passwordHash = await hash(password, 8);
 
         await this.repository.create({
