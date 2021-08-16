@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { hash } from "bcrypt";
+import { AppError } from "../../../../errors/AppError";
 
 @injectable()
 class CreateUserService {
@@ -16,7 +17,7 @@ class CreateUserService {
         const userAlreadyExists = this.repository.findByEmail(email);
 
         if (userAlreadyExists) {
-            throw new Error("User Already Exists");
+            throw new AppError("User Already Exists");
         }
 
         const passwordHash = await hash(password, 8);
