@@ -1,5 +1,5 @@
-import { Category } from "../../entities/Category";
-import { ICategoriesRepository, ICreateCategoryDTO } from "../ICategoriesRepository";
+import { Category } from "../Category";
+import { ICategoriesRepository, ICreateCategoryDTO } from "../../../repositories/ICategoriesRepository";
 import { getRepository, Repository } from "typeorm";
 
 class CategoriesRepository implements ICategoriesRepository {
@@ -8,14 +8,6 @@ class CategoriesRepository implements ICategoriesRepository {
     constructor() {
         this.repository = getRepository(Category);
     }
-
-    // public static getInstance(): CategoriesRepository {
-    //     if (!CategoriesRepository.INSTANCE) {
-    //         CategoriesRepository.INSTANCE = new CategoriesRepository();
-    //     }
-
-    //     return CategoriesRepository.INSTANCE;
-    // }
 
     async create({ name, description }: ICreateCategoryDTO): Promise<void> {
         const category = this.repository.create({
