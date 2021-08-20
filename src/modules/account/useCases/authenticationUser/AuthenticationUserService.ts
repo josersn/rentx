@@ -30,7 +30,7 @@ class AuthenticationUserService {
         const user = await this.repository.findByEmail(email);
 
         if (!user) {
-            throw new AppError("Email or Passowr incorrect!");
+            throw new AppError("Email or Passoword incorrect!");
         }
 
         const passwordMacth = await compare(password, user.password);
