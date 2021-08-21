@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import swagger from "swagger-ui-express";
 
-import "../../typeorm";
+import "../typeorm";
 import "../../container";
 
 import swaggerFile from "../../../swagger.json"
