@@ -1,5 +1,5 @@
 import { CarsRepositoryInMemory } from "../../repositories/in-memory/CarsRepositoryInMemory";
-import { ListCarsService } from "./ListCarsService"
+import { ListCarsService } from "./ListAvailableCarsService"
 
 let listCarsService: ListCarsService;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
