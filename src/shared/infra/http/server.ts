@@ -3,14 +3,14 @@ import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import swagger from "swagger-ui-express";
 
-import "../typeorm";
+import createConnetrion from "../typeorm";
 import "../../container";
 
 import swaggerFile from "../../../swagger.json"
 import { router } from "./routes";
 import { AppError } from "../../errors/AppError";
 
-
+createConnetrion();
 const app = express();
 
 app.use(express.json());
