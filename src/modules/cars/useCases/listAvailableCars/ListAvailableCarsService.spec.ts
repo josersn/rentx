@@ -1,14 +1,14 @@
 import { CarsRepositoryInMemory } from "../../repositories/in-memory/CarsRepositoryInMemory";
-import { ListCarsService } from "./ListAvailableCarsService"
+import { ListAvailableCarsService } from "./ListAvailableCarsService"
 
-let listCarsService: ListCarsService;
+let listCarsService: ListAvailableCarsService;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("List Cars", () => {
 
     beforeEach(() => { 
         carsRepositoryInMemory = new CarsRepositoryInMemory();
-        listCarsService = new ListCarsService(carsRepositoryInMemory);
+        listCarsService = new ListAvailableCarsService(carsRepositoryInMemory);
     })
 
     it("Should be able to list all available cars", async () => {
