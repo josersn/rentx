@@ -1,12 +1,13 @@
 import { v4 as uuidV4 } from "uuid";
-import { Column, CreateDateColumn, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 
+@Entity("cars_image")
 class CarImage {
     @PrimaryColumn()
     id: string;
 
     @Column()
-    card_id: string;
+    car_id: string;
 
     @Column()
     image_name: string;
