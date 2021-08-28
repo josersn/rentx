@@ -1,9 +1,8 @@
+import { inject, injectable } from "tsyringe";
 import { IDateProvider } from "../../../../shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "../../../../shared/errors/AppError";
 import { Rental } from "../../infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "../../repositories/IRentalsRepository";
-
-
 
 interface IRequest {
     user_id: string;
@@ -11,12 +10,15 @@ interface IRequest {
     expected_return_date: Date;
 }
 
+@injectable()
 class CreateRentalService {
 
     readonly minHoursToRentalACar: number = 24;
-
+    
     constructor(
+        @inject("RentalRepository")
         private rentalsRepository: IRentalsRepository,
+        @inject("DayjsDateProvider")
         private dateProvider: IDateProvider
     ) { }
 
@@ -24,7 +26,7 @@ class CreateRentalService {
     async execute({ user_id, car_id, expected_return_date }: IRequest): Promise<Rental> {
 
         const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
-
+        
         if (carUnavailable) {
             throw new AppError("Car is not available");
         }
