@@ -1,8 +1,12 @@
 import { inject, injectable } from "tsyringe";
+
 import { IDateProvider } from "../../../../shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "../../../../shared/errors/AppError";
-import { Rental } from "../../infra/typeorm/entities/Rental";
+
+import { ICarsRepository } from "../../../cars/repositories/ICarsRepository";
 import { IRentalsRepository } from "../../repositories/IRentalsRepository";
+
+import { Rental } from "../../infra/typeorm/entities/Rental";
 
 interface IRequest {
     user_id: string;
@@ -14,19 +18,21 @@ interface IRequest {
 class CreateRentalService {
 
     readonly minHoursToRentalACar: number = 24;
-    
+
     constructor(
         @inject("RentalRepository")
         private rentalsRepository: IRentalsRepository,
         @inject("DayjsDateProvider")
-        private dateProvider: IDateProvider
+        private dateProvider: IDateProvider,
+        @inject("CarsRepository")
+        private carsRepository: ICarsRepository
     ) { }
 
 
     async execute({ user_id, car_id, expected_return_date }: IRequest): Promise<Rental> {
 
         const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
-        
+
         if (carUnavailable) {
             throw new AppError("Car is not available");
         }
@@ -38,8 +44,8 @@ class CreateRentalService {
         }
 
         const compare = this.dateProvider.compareInHours(
-                                                this.dateProvider.dateNow(),
-                                                expected_return_date)
+            this.dateProvider.dateNow(),
+            expected_return_date)
 
         if (this.minHoursToRentalACar > compare) {
             throw new AppError("Invalid return time!");
@@ -50,6 +56,8 @@ class CreateRentalService {
             car_id,
             expected_return_date
         });
+
+        await this.carsRepository.updateAvailable(car_id, false);
 
         return rental;
     }

@@ -6,10 +6,12 @@ import { DayjsDateProvider } from "../../../../shared/container/providers/DatePr
 
 import { RentalsRepositoryInMemory } from "../../repositories/in-memory/RentalsRepositoryInMemory";
 import { CreateRentalService } from "./CreateRentalService"
+import { CarsRepositoryInMemory } from "../../../cars/repositories/in-memory/CarsRepositoryInMemory";
 
 let createRentalService: CreateRentalService;
 let rentalsRepositoryInMemory: RentalsRepositoryInMemory;
 let dateProvider: DayjsDateProvider;
+let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("Create Rental", () => {
 
@@ -18,7 +20,8 @@ describe("Create Rental", () => {
     beforeEach(() => {
         rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
         dateProvider = new DayjsDateProvider();
-        createRentalService = new CreateRentalService(rentalsRepositoryInMemory, dateProvider);
+        carsRepositoryInMemory = new CarsRepositoryInMemory();
+        createRentalService = new CreateRentalService(rentalsRepositoryInMemory, dateProvider, carsRepositoryInMemory);
     })
 
     it("Should be able to create a new rental", async () => {
