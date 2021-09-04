@@ -9,9 +9,9 @@ class SendForgetPasswordMailController {
 
         const service = container.resolve(SendForgetPasswordMailService)
 
-        service.execute(email);
+        await service.execute(email);
 
-        return res.json();
+        return res.send();
     }
 
 }
