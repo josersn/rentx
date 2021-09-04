@@ -10,9 +10,9 @@ export async function ensureAdmin(
 ) {
     const { id } = req.user;
 
-    const userReposioty = new UsersRepository();
+    const userRepository = new UsersRepository();
 
-    const user = await userReposioty.findById(id);
+    const user = await userRepository.findById(id);
 
     if(!user.isAdmin) {
         throw new AppError("User is not admin!");
