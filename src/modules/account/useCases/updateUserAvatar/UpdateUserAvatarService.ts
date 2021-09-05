@@ -21,12 +21,12 @@ class UpdateUserAvatarService {
     async execute({ user_id, avatar_file }: IRequest): Promise<void> {
         const user = await this.repository.findById(user_id);
 
-        if(user.avatar) {
-            await this.storage.delete(avatar_file, "avatar")
+        if (user.avatar) {
+            await this.storage.delete(user.avatar, "avatar")
         }
-        
+
         await this.storage.save(avatar_file, "avatar");
-        
+
         user.avatar = avatar_file;
 
         await this.repository.create(user);
