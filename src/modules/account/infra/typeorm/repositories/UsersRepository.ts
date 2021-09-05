@@ -17,6 +17,7 @@ class UsersRepository implements IUsersRepository {
 
         return user;
     }
+    
     async findByEmail(email: string): Promise<User> {
         const user = await this.repository.findOne({ email });
 
@@ -29,7 +30,6 @@ class UsersRepository implements IUsersRepository {
         });
 
         await this.repository.save(user);
-
 
     }
 
