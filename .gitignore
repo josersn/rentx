@@ -4,3 +4,4 @@ tmp/*
 yarn-error.log
 .env
 dist/*
+!tmp/.gitkeep
