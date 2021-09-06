@@ -1,6 +1,8 @@
+import { DayjsDateProvider } from "../../../../shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 import { AppError } from "../../../../shared/errors/AppError";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
+import { UsersTokensRepositoryInMemory } from "../../repositories/in-memory/UsersTokensRepositoryInMemory";
 import { CreateUserService } from "../createUser/CreateUserService";
 import { AuthenticationUserService } from "./AuthenticationUserService"
 
@@ -9,10 +11,16 @@ describe("Authenticate user", () => {
     let authenticateUserService: AuthenticationUserService;
     let usersRepositoryInMemory: UsersRepositoryInMemory;
     let createUserService: CreateUserService;
+    let userTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
+    let dateProvider: DayjsDateProvider;
 
     beforeEach(() => {
         usersRepositoryInMemory = new UsersRepositoryInMemory();
-        authenticateUserService = new AuthenticationUserService(usersRepositoryInMemory);
+        dateProvider = new DayjsDateProvider();
+        userTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
+        authenticateUserService = new AuthenticationUserService(usersRepositoryInMemory,
+            userTokensRepositoryInMemory,
+            dateProvider);
         createUserService = new CreateUserService(usersRepositoryInMemory);
     })
 
@@ -55,7 +63,7 @@ describe("Authenticate user", () => {
                 password: "teste123",
                 username: "teste"
             }
-    
+
             await createUserService.execute(user);
 
             await authenticateUserService.execute({
